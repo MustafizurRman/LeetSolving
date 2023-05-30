@@ -1,0 +1,29 @@
+//This loop iterates over each string st in the strs vector. It creates a copy of st called temp and sorts the characters of temp in ascending order. Then, it adds st to the vector corresponding to the key temp in the mp map.
+
+//For example, if strs contains the strings ["eat", "tea", "tan", "ate", "nat", "bat"], after this loop, the mp map will have the following key-value pairs:
+
+//aet : ["eat", "tea", "ate"]
+//ant : ["tan", "nat"]
+//abt : ["bat"]
+
+
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        if(strs.size()==0) return {{""}};
+        
+        vector<vector<string>> result;
+        unordered_map <string, vector<string>>valmap;
+
+        for(int i=0;i<strs.size();i++){
+            string temp=strs[i];
+            sort(temp.begin(), temp.end());
+            valmap[temp].push_back(strs[i]);
+        }
+        for(auto&subvector:valmap){
+            result.push_back(subvector.second);
+        }
+
+        return result;
+    }
+};
