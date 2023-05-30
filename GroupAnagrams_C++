@@ -1,0 +1,43 @@
+//This is a time limit exceeded method of group anagram problem from leet code
+//https://leetcode.com/problems/group-anagrams/description/
+//I saved this code cause I am learning ways to improve slowly,I solved the problem now will try to make it so It can be in time limit
+
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        if(strs.size()==0) return {{""}};
+        
+        vector<vector<string>> result;
+        unordered_map <string, vector<string>>map;
+
+        for(int i=0;i<strs.size();i++){
+            vector<string>subresult;
+            subresult.push_back(strs[i]);
+            string temp=strs[i];
+            for(int j=i+1;j<strs.size();j++){
+                if(isAnagram(temp,strs[j])){
+                    subresult.push_back(strs[j]);
+                    strs.erase(strs.begin() + j);
+                    j--;
+                }
+            }
+            result.push_back(subresult);
+        }
+
+        return result;
+    }
+
+    bool isAnagram(string s, string t) {
+        if(s.size()!=t.size())return false;
+        int sums=0, sumt=0;
+        int a[26] = {0};
+        for(int i=0;i<s.size();i++){
+            a[s[i]-'a'] += 1;
+            a[t[i]-'a'] -= 1;
+        }
+        for(int i=0;i<26;i++){
+            if(a[i]!=0) return false;
+        }
+        return true;
+    }
+};
